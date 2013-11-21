@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+TODO: Show only origins after Faction, and only those that are related to the faction
+{% if check %}
+	<P>Maximum amount of characters has been reached</P>
+	<P><a href="/users/{{ user.id }}/characters/">click here</a> to return</P>
+
+{% else %}
+
+	<h2>Create new character</h2>
+	<form action="/users/{{ user.id }}/create/" method="post">{% csrf_token%}
+	{{ create_char.as_p }}
+	
+	<input type="submit" value="Create" />
+	
+	</form>
+{% endif %}
+
+{% endblock %}	

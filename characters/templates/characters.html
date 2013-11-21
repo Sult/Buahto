@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if characters|length > 0 %}
+	{% for character in characters %}
+
+	<p><a href="/characters/{{ character.id }}/"><img>{{character.open}}(WN)</img></a></p>
+
+	<ul><a href="/characters/{{ character.id }}/">{{character.name}}(WN)</a></ul>
+	<ul>{{character.faction}}</ul>
+	
+	{% if character.protected %}
+		<ul><font color="green"><b>PROTECTED</b></font></ul>
+
+	{% endif %}
+
+	{% endfor %}
+
+{% endif %}	
+{% if characters|length < 3 %}
+	
+	<p><a href="/users/{{ user.id }}/create/">New Character(WN)</a></p>
+	
+	
+{% endif %}
+
+{% endblock %}
