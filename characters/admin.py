@@ -1,20 +1,33 @@
 from django.contrib import admin
-from characters.models import Character, FactionReputation, NpcGuildReputation
+from characters.models import Character, CharacterAttribute
+from characters.models import FactionReputation, TrainedSkill
 
 
-
+# Character information
 class CharacterAdmin(admin.ModelAdmin):
 	fieldsets = [
-		('General information', {'fields': ['name', 'user', 'faction', 'origin', 'safekeeping', 'bounty']}),
-		('Portrait', {'fields': ['portrait'], 'classes': ['collapse']}),
+		('General information', {'fields': ['name', 'user', 'faction']}),
+		('Portrait', {'fields': ['portrait', 'remap'], 'classes': ['collapse']}),
 	]
 	
-	list_display = ('name', 'user', 'creation', 'protected')
+	list_display = ('name', 'user', 'protected')
 	list_filter = ['faction']
 	search_fields = ('name', 'user')
 	
 	
-class CharacterReputationAdmin(admin.ModelAdmin):
+#Character attributes (want to inline collapsed later)
+class CharacterAttributeAdmin(admin.ModelAdmin):
+	fieldsets = [
+		('Character Attributes', {'fields': ['character', 'attribute', 'score']}),
+	]
+	
+	list_display = ('attribute', 'score', 'character')
+	list_filter = ['attribute']
+	search_fields = ['character__name']
+
+
+#Character Faction overview	
+class FactionReputationAdmin(admin.ModelAdmin):
 	fieldsets = [
 		('Faction Reputation', {'fields': ['character', 'faction', 'reputation']}),
 	]
@@ -23,17 +36,19 @@ class CharacterReputationAdmin(admin.ModelAdmin):
 	list_filter = ['faction']
 	search_fields = ['character__name']
 	
-
-class NpcGuildReputationAdmin(admin.ModelAdmin):
+class TrainedSkillAdmin(admin.ModelAdmin):
 	fieldsets = [
-		('Npc Guild Reputation', {'fields': ['character', 'npcguild', 'reputation']}),
+		('Skill', {'fields': ['skill', 'level', 'character']}),
 	]
 	
-	list_display = ('character', 'npcguild', 'show_reputation')
-	list_filter = ['npcguild']
-	search_fields = ['character__name']
+	list_display = ('skill', 'level', 'character')
+	list_filter = ['level']
+	search_fields = ('skill__name', 'character__name')
 	
 	
+
+
 admin.site.register(Character, CharacterAdmin)
-admin.site.register(FactionReputation, CharacterReputationAdmin)
-admin.site.register(NpcGuildReputation, NpcGuildReputationAdmin)
+admin.site.register(CharacterAttribute, CharacterAttributeAdmin)
+admin.site.register(FactionReputation, FactionReputationAdmin)
+admin.site.register(TrainedSkill, TrainedSkillAdmin)

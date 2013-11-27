@@ -7,7 +7,7 @@ Little script to load basic data into database after the need to rebuild it.
 
 from elements.models import Faction, FactionLike, Origin, GuildCategory
 from elements.models import Portrait
-from elements.models import GeneralGameStats
+from elements.models import GeneralGameStats, Attribute, SkillCategory
 
 
 
@@ -93,13 +93,42 @@ def add_origins():
 # Add general game stats
 def add_generalgamestats():
 	generalstats = GeneralGameStats(
+		#character statistics
 		maximum_characters = 3,
 		character_protection = 14,
+		default_attribute = 20, 
+		minimum_attribute = 15,
+		maximum_attribute = 27,
+		
+		# skills
+		basic_skill_points = 150,
+		default_multiplier = 2.3,
+		primary_multiplier = 1.2,
+		secundary_multiplier = 0.6,
+		
+		#Reputation statistics
 		is_faction = 1.000,
 		likes_faction = 0.250,
 		hates_faction = -0.500,
 		)
+		
 	generalstats.save()
+
+def add_attributes():
+	allattributes = (
+		('Strength'),
+		('Constitution'),
+		('Dexterity'),
+		('Intelligence'),
+		('Wisdom'),
+		('Charisma'),
+	)
+	
+	for attribute in allattributes:
+		new_attribute = Attribute(
+			name = attribute,
+		)
+		new_attribute.save()
 
 
 #def add_portraits():
@@ -125,6 +154,7 @@ def add_portraits():
 			portrait = port[1]
 			
 		)
+		
 	
 		new_port.save()
 
@@ -145,8 +175,33 @@ def add_guildcategories():
 		new_category.save()
 				
 
-
-
+def add_skillcategories():
+	all_categories = (
+		('Archery', 'flavor text'),
+		('Armor', 'flavor text'),
+		('Elixers', 'flavor text'),
+		('Endurance', 'flavor text'),
+		('Exploration', 'flavor text'),
+		('Guild Management', 'flavor text'),
+		('Mercenaries', 'flavor text'),
+		('Navigation', 'flavor text'),
+		('Production', 'flavor text'),
+		('Resource Processing', 'flavor text'),
+		('Science', 'flavor text'),
+		('Social', 'flavor text'),
+		('Tactics', 'flavor text'),
+		('Town management', 'flavor text'),
+		('Trade', 'flavor text'),
+		('Travel', 'flavor text'),
+		('Weapons', 'flavor text'),
+	)
+	
+	for category in all_categories:
+		new_category = SkillCategory(
+							name=category[0],
+							flavor=category[1],
+							)
+		new_category.save()
 
 
 
@@ -154,6 +209,8 @@ add_factions()
 add_faction_likes()
 add_origins()
 add_generalgamestats()
+add_attributes()
 add_guildcategories()
 add_portraits()
+add_skillcategories()
 

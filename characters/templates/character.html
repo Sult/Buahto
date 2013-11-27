@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block mainframe %}
+
+
+<div class="profile_portrait" >
+	<div class="float: right">
+	<center>
+		<img src="{{ character.portrait.portrait }}" alt="IMG: {{ character.portrait.name }}"/>
+	</center>
+	</div>
+</div>
+
+<div class  = "profile">
+<table border="0">
+	<tr>
+		<td>Name: </td>
+		<td>{{ character.name }}</td>
+	</tr>
+	<tr>	
+		<td>Faction: </td>
+		<td>{{ character.faction }}</td>
+	</tr>
+	<tr>	
+		<td>Guild: </td>
+		<td>{{ character.guild }}</td>
+	</tr>
+	<tr>		
+		<td>Creation:&nbsp;&nbsp;</td>
+		<td>{{ character.creation }}</td>
+	<tr>
+		<td></td>
+		<td>
+			{% if character.protected %}
+				<font color="green"><b>PROTECTED</b></font>
+			{% endif %}
+		</td>	
+	</tr>
+	</tr>
+</table>
+
+<br><br>
+
+
+{% endblock %}

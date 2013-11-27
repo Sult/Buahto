@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'game_db',                      # Or path to database file if using sqlite3.
+        'NAME': 'buahgame_db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -69,6 +69,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+	('assets', "/home/ikke/panda/realbuahto/static"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -108,7 +109,7 @@ ROOT_URLCONF = 'realbuahto.urls'
 WSGI_APPLICATION = 'realbuahto.wsgi.application'
 
 TEMPLATE_DIRS = (
-	"/home/ikke/panda/realbuahto/templates/"
+	"/home/ikke/panda/realbuahto/static/templates/"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -158,5 +159,17 @@ LOGGING = {
         },
     }
 }
+
+
+
+#My extra implemented settings:
+TEMPLATE_CONTEXT_PROCESSORS = (
+	"django.contrib.auth.context_processors.auth",
+	"django.core.context_processors.debug",
+	"django.core.context_processors.i18n",
+	"django.core.context_processors.media",
+	"django.core.context_processors.static",
+	"django.contrib.messages.context_processors.messages",
+)
 
 

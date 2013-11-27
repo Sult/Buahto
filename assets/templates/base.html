@@ -1,0 +1,38 @@
+{% load static %}
+<DOCTYPE html>
+<html lang='en'>
+<head>
+	<title>Buahto {% block tittle %}{% endblock %}</title>
+	
+	<link rel="stylesheet" type="text/css" href="{% static "assets/css/default.css" %}">
+
+</head>
+
+
+
+<body>
+	<div id="page">
+	
+	<div id="sidebar">
+		{% block sidebar %}
+			<img src="{% static "assets/templates/images/logo.png" %}" alt="logo"/>
+		<ul>
+			User:
+			<li type="square"><a href="/users/login/">Login</a></li>
+			<li type="square"><a href="/users/characters/">Characters(WN!)</a></li>
+		</ul>
+		{% endblock %}
+	</div>
+		
+	<div id="userpanel">
+		{% block userpanel %} {% endblock %}
+	</div>
+	
+	<div id="content">
+		{% block content %}{% endblock %}
+	</div>
+	
+	</div>
+	
+</body>
+</html>

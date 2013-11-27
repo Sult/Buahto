@@ -1,0 +1,123 @@
+<title>Buahto {% block tittle %}{% endblock %}</title>
+
+<style type="text/css">
+
+body {
+	}
+	
+#page {
+	width: 85%;
+	min-width: 760px;
+	min-height: 420px;
+	max-width: 1800px;
+	margin: 40px auto 10px auto;
+	font-size: 12px;
+}
+	
+	
+#sidebar {
+	padding: 10px;
+	float: left;
+	min-height: 350px;
+	width: 15%;
+	min width: 150px;
+}
+
+
+#userpanelright {
+	float: right;
+	width: 20%;
+	min-width: 140px;
+	min-height: 60px;
+	max-height: 200px;
+	padding: 10px auto 10px auto;
+}
+
+#userpanelleft {
+	float: left;
+	width: 40%;
+	min-height: 60px;
+	max-height: 200px;
+	padding: 10px auto 10px auto;
+}
+
+#content {
+	float: left;
+	width: 65%;
+	min-height: 350px;
+	padding: 20px;
+	padding: 10px;
+}
+
+
+#sideframe {
+	float: right;
+	padding: 10px;
+	min-height: 350px;
+	width: 10%;
+	min width: 75px;
+	padding: 10px;
+	
+}
+
+	
+/*  login button as link  */	
+button.link input[type="button"], input[type="button"]:focus, input[type="button"]:active,  
+	button, button:focus, button:active {
+	/* Remove all decorations to look like normal text */
+	background: none;
+	border: none;
+	display: inline;
+	font: inherit;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	outline-offset: 0;
+	/* Additional styles to look like a link */
+	color: blue;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+ Remove extra space inside buttons in Firefox 
+input[type="button"]::-moz-focus-inner,
+	button::-moz-focus-inner {
+	border: none;
+	padding: 0;
+	background:none!important;
+	border:none; 
+	padding:0!important;
+}
+
+/*  Login form  */	
+.login {
+	float: right;
+	width: 120px;
+	height: 25px;
+	text-align: left;
+}
+
+/*  spacing characters (max3)  */
+.characters {
+	float: left; 
+	min-width: 25%;
+	min-height: 30%;
+}
+
+/*  profile table spacing  */
+.profile_portrait { 
+	float: left; 
+	
+	min-width: 25%;
+	
+}
+
+.profile { 
+	float: left; 
+	
+}
+
+
+
+</style>
+

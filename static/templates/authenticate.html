@@ -1,0 +1,37 @@
+<!-- If user is logged in -->
+{% if user.is_authenticated %}
+	<div style="float: right">
+		Welcome {{ user.username }}.
+		<br><br>
+		<form action="/logout/" method="post">{% csrf_token %}
+			<button type="submit" class="link" style="text-align: right">
+				logout
+			</button>
+		</form>
+	</div>
+
+
+<!-- If user is not logged in -->
+{% else %}
+	<form action="{% url 'index' %}" method="post" class="login">{% csrf_token %}
+
+	{% for field in auth_form %}
+ 
+		<div class="login">
+			{{ field }}
+		</div>
+	{%  endfor %}
+
+	{{ auth_form.non_field_errors }}
+
+	<div>
+		<button type="submit" class="link">
+			login
+		</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{% url 'register_user' %}">
+			register
+		</a>
+	</div>
+{% endif %}
+

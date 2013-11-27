@@ -1,11 +1,27 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.http import HttpResponseRedirect
 from django.contrib import auth
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 from django.core.context_processors import csrf
 
 from forms import RegistrationForm
+from django.contrib.auth.forms import AuthenticationForm
 
+
+
+def index(request):
+    """Logs a user into the application."""
+    auth_form = AuthenticationForm(None, request.POST or None)
+	
+    # The form itself handles authentication and checking to make sure passowrd and such are supplied.
+    if auth_form.is_valid():
+        login(request, auth_form.get_user())
+        return HttpResponseRedirect(reverse('index'))
+ 
+    return render(request, 'index.html', {'auth_form': auth_form})
 
 
 # account views
@@ -28,43 +44,8 @@ def register_success(request):
 	return render_to_response("register_success.html")	
 
 
-# login
-def login(request):
-	c = {}
-	c.update(csrf(request))
-	return render_to_response('login.html', c)
-	
-
-# authentication
-def auth_view(request):
-	username = request.POST.get('username', '')
-	password = request.POST.get('password', '')
-	
-	#returns None if not correct
-	user = auth.authenticate(username=username, password=password)
-	
-	if user is not None:
-		auth.login(request, user)
-		return HttpResponseRedirect('/users/loggedin')
-	else:
-		return HttpResponseRedirect('/users/invalid')
-
-
-# Logged in
-def loggedin(request):
-	return render_to_response('loggedin.html',
-							{'username': request.user.username})
-
-
-#invalid login
-def invalid_login(request):
-	return render_to_response('invalid_login.html')
-
-
 #Logout
 def logout(request):
 	auth.logout(request)
-	return render_to_response('logout.html')
+	return HttpResponseRedirect(reverse('index'))
 	
-
-

@@ -1,28 +1,45 @@
 {% extends "base.html" %}
+{% block mainframe %}
 
-{% block content %}
 
-{% if characters|length > 0 %}
+{% if characters|length < 4 %}
 	{% for character in characters %}
-
-	<p><a href="/characters/{{ character.id }}/"><img>{{character.open}}(WN)</img></a></p>
-
-	<ul><a href="/characters/{{ character.id }}/">{{character.name}}(WN)</a></ul>
-	<ul>{{character.faction}}</ul>
-	
-	{% if character.protected %}
-		<ul><font color="green"><b>PROTECTED</b></font></ul>
-
-	{% endif %}
-
+		<div class="characters">
+				<div>
+					<a href="{% url 'character_profile' character.name %}">
+						<img src="{{ character.portrait.portrait }}" alt="{{ character.portrait.name }}"/>
+					</a>
+				</div>
+				<div style="height: 30px">
+					<a href="{% url 'character_profile' character.name %}">
+						{{character.name}}
+					</a>
+				</div>
+				<div>
+					{{character.faction}}
+				</div>
+				
+				{% if character.protected %}
+					<div style="color: green">
+						<b>PROTECTED</b>
+					</div>
+				{% endif %}
+			
+				<div style="text-align: center">
+					<a href="{% url 'login_character' character.name %}">
+						Log in(WN)
+					</a>
+				</div>
+			</a>
+		</div>
 	{% endfor %}
-
 {% endif %}	
+
+
 {% if characters|length < 3 %}
-	
-	<p><a href="/users/{{ user.id }}/create/">New Character(WN)</a></p>
-	
-	
+	<div>
+		<p><a href="{% url 'create_character' %}">New Character</a></p>
+	</div>
 {% endif %}
 
 {% endblock %}

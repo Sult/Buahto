@@ -1,0 +1,49 @@
+{% load static %}
+<DOCTYPE html>
+<html lang='en'>
+<head>
+	<title>Buahto {% block tittle %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static "assets/css/default.css" %}">
+	
+
+</head>
+
+
+
+<body>
+	<div id="page">
+	
+	<div id="sidebar">
+		<!-- Wordt ook template -->
+		{% block sidebar %}
+			<br>
+			NAVIGATOR
+			<br><br>
+			LINKS HIER
+			<br><br>
+			-<a href="/users/login/">Login</a><br>
+			<br>
+			-<a href="{% url 'characters' %}">Characters(WN!)</a><br><br>
+		{% endblock %}
+	</div>
+	<div>
+		<div id="userpanelleft">
+			{% block userpanelleft %} 
+			{% endblock %}
+		</div>
+		<div id="userpanelright">
+			{% block userpanelright %} 
+				{% include "authenticate.html" %}
+			{% endblock %}
+		</div>
+	</div>	
+	<div id="mainframe">
+		{% block mainframe %}{% endblock %}
+	</div>
+		<div>
+		<div id="sideframe">
+			{% block sideframe %}{% endblock %}
+		</div>
+	</div>
+</body>
+</html>

@@ -1,49 +1,16 @@
 from django.contrib import admin
-from elements.models import Faction, FactionLike, Origin
-from elements.models import Portrait, GeneralGameStats
+from elements.models import Skill
 
 
-# General game settings
-class GeneralGameStats(admin.ModelAdmin):
+class SkillAdmin(admin.ModelAdmin):
 	fieldsets = [
-		('General Game Settings', {'fields': ['maximum_characters'], 'classes': ['collape']}),
+		('Skill Information', {'fields': ['name', 'flavor']}),
+		('Skill Data', {'fields': ['category', 'primary', 'secundary', 'multiplier'], 'classes': ['collapse']}),
 	]
 	
-
-# Make origin admin (inlines in Faction)
-class OriginInline(admin.StackedInline):
-	model = Origin
-	extra = 0
-	
-	fieldsets = [
-		('Faction', {'fields': ['name', 'flavor']}),
-	]
-
-#Faction admin
-class FactionAdmin(admin.ModelAdmin):
-	fieldsets = [
-		('Faction', {'fields': ['name', 'flavor']}),
-	]
-	
-	inlines = [OriginInline]
-
-#Faction standings with other factions
-class FactionLikeAdmin(admin.ModelAdmin):
-	fieldsets = [
-		('Faction Standings with others', {'fields': ['faction', 'likes_faction', 'hates_faction']}),
-	]
-
-
-class PortraitAdmin(admin.ModelAdmin):
-	fieldsets = [
-		('Portrait', {'fields': ['name', 'portrait']}),
-	]
-
-	list_display = ('name', 'portrait')
+	list_display = ('name', 'category', 'primary', 'secundary', 'multiplier')
+	list_filter = ('category', 'primary', 'multiplier')
 	search_fields = ['name']
 
 
-
-admin.site.register(Faction, FactionAdmin)
-admin.site.register(FactionLike, FactionLikeAdmin)
-admin.site.register(Portrait, PortraitAdmin)
+admin.site.register(Skill, SkillAdmin)
