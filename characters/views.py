@@ -8,26 +8,27 @@ from django.contrib.auth.models import User
 from characters.models import Character, CharacterAttribute, FactionReputation
 from elements.models import GameRelatedNumbers
 
-from forms import CreateCharacterForm
+from forms import CreateCharacterForm, RemapForm
 
 import datetime
-from game_logic import character_logic
+from django.utils.timezone import utc
+from game_methods import character_logic
+
 
 # Example: /characters/
 # Views: All characters the user owns, and a way to choose one to log in
 
 def characters(request):
-	characters = Character.objects.filter(user=request.user.is_authenticated())
-	print characters
+	characters = Character.objects.filter(user=request.user)
 	return render(request, 'characters.html', {'characters': characters})
 
 
 # Views character
 # Full profile if the user_id is active user, else public profile
-def character_profile(request, character_name):
+def profile(request, character_name):
 	character = Character.objects.get(name=character_name)
 	
-	return render(request, 'character.html', {'character': character})
+	return render(request, 'profile.html', {'character': character})
 	
 
 
@@ -51,7 +52,7 @@ def create_character(request):
 				#set user and save
 				new_char_obj.name = new_char_obj.name.lower()
 				new_char_obj.user = request.user
-				new_char_obj.remap = datetime.datetime.now()
+				new_char_obj.remap = datetime.datetime.utcnow().replace(tzinfo=utc)
 				new_char_obj.bonus_remaps = GameRelatedNumbers.objects.get(id=1).remap_bonus
 				new_char_obj.save()
 				
@@ -83,7 +84,24 @@ def create_character(request):
 
 def login_character(request, character_name):
 	request.session['character'] = Character.objects.get(name=character_name)
-	print request.session['character'].faction
-	
-	
 	return HttpResponseRedirect(reverse('index'))
+
+
+
+def remap(request):
+	
+	
+	if 'character' in request.session:
+		print request.session['character']
+		scores = CharacterAttribute.objects.filter(character=request.session['character']).all()
+		print scores
+		
+				
+		
+		return render(request, 'remap.html', {'scores': scores})
+		
+	else:
+		return HttpResponseRedirect(reverse('index'))
+	
+	
+	

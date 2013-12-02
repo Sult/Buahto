@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block mainframe %}
+<br>
+<br>
+<br>
+<br>
+
+All Available skills
+TODO: Swap between all available and set in training form
+<table>
+	{% for category, skills in ground_skills_available %}
+		<tr>
+			<th>{{ category }}</th>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+
+		{% for skill in skills %}
+		<tr>
+			<td>{{ skill.name }}</td>
+		</tr>
+			{% if forloop.last %}
+			<tr>
+				<td><br></td>
+			</tr>
+			{% endif %}
+		{% endfor %}
+	{% endfor %}
+</table>
+{% endblock %}

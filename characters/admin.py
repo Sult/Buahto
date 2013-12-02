@@ -1,6 +1,6 @@
 from django.contrib import admin
 from characters.models import Character, CharacterAttribute
-from characters.models import FactionReputation, TrainedSkill
+from characters.models import FactionReputation, TrainedSkill, SkillTrainingTimer
 
 
 # Character information
@@ -36,6 +36,8 @@ class FactionReputationAdmin(admin.ModelAdmin):
 	list_filter = ['faction']
 	search_fields = ['character__name']
 	
+	
+	
 class TrainedSkillAdmin(admin.ModelAdmin):
 	fieldsets = [
 		('Skill', {'fields': ['skill', 'level', 'character']}),
@@ -43,12 +45,22 @@ class TrainedSkillAdmin(admin.ModelAdmin):
 	
 	list_display = ('skill', 'level', 'character')
 	list_filter = ['level']
-	search_fields = ('skill__name', 'character__name')
+	#search_fields = ('skill__name', 'character__name')
 	
 	
-
-
+class SkillTrainingTimerAdmin(admin.ModelAdmin):
+	fieldsets = [
+		('Skill Training', {'fields': ['character', 'skill', 'timer', 'trainingground']}),
+	]
+	
+	list_display = ('character', 'skill', 'time_remaining', 'trainingground')
+	search_fields = ('character', 'skill')
+	
+	
+	
+	
 admin.site.register(Character, CharacterAdmin)
 admin.site.register(CharacterAttribute, CharacterAttributeAdmin)
 admin.site.register(FactionReputation, FactionReputationAdmin)
 admin.site.register(TrainedSkill, TrainedSkillAdmin)
+admin.site.register(SkillTrainingTimer, SkillTrainingTimerAdmin)

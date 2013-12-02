@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block mainframe %}
+
+
+<div class="profile_portrait" >
+	<div class="float: right">
+	<center>
+		<img src="{{ request.session.character.portrait.portrait }}" alt="IMG: {{ request.session.character.portrait.name }}"/>
+	</center>
+	</div>
+</div>
+
+<div class  = "profile">
+<table border="0">
+	<tr>
+		<td>Name: </td>
+		<td>{{ request.session.character.name }}</td>
+	</tr>
+	<tr>	
+		<td>Faction: </td>
+		<td>{{ request.session.character.faction }}</td>
+	</tr>
+	<tr>	
+		<td>Guild: </td>
+		<td>{{ request.session.character.guild }}</td>
+	</tr>
+	<tr>		
+		<td>Creation:&nbsp;&nbsp;</td>
+		<td>{{ request.session.character.creation }}</td>
+		<tr>
+			<td></td>
+			<td>
+			{% if request.session.character.protected %}
+				<font color="green"><b>PROTECTED</b></font>
+			{% endif %}
+			</td>	
+		</tr>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+	<tr>
+		<th>Timers:</th>
+	</tr>
+	<tr>
+		<td>Skill Training:</td>
+		<td>{{ timer}}</td>
+	</tr>
+</table>
+
+<br><br>
+
+
+{% endblock %}

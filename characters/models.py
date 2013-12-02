@@ -4,9 +4,14 @@ from django.contrib.auth.models import User
 
 from elements.models import GameRelatedNumbers
 from elements.models import Portrait, Attribute, Faction, FactionLike, Skill
+from towns.models import Town, TrainingGround
+
 
 import time
 import datetime
+from django.utils.timezone import utc
+
+from game_methods import game_logic
 
 
 
@@ -28,7 +33,10 @@ class Character(models.Model):
 	
 	remap = models.DateTimeField(blank=True)
 	bonus_remaps = models.IntegerField()
-
+	
+	# current town
+	town = models.ForeignKey(Town)
+	
 	
 	def remap_available(self):
 		return self.remap < timezone.now()
@@ -36,8 +44,9 @@ class Character(models.Model):
 	
 	# New player protection (set to 14 days)
 	def protected(self):
+		now = datetime.datetime.utcnow().replace(tzinfo=utc)
 		safe_days = GameRelatedNumbers.objects.get(id=1).character_protection
-		return self.creation >= timezone.now() - datetime.timedelta(days=safe_days)
+		return self.creation >= now - datetime.timedelta(days=safe_days)
     
 	protected.admin_order_field = 'creation'
 	protected.boolean = True
@@ -103,7 +112,39 @@ class TrainedSkill(models.Model):
 	skill = models.ForeignKey(Skill)
 	
 	level = models.IntegerField(default=0)
+	progress = models.IntegerField(default=0)						# keeps track of how far you are trained to next level
 	
 	def __unicode__(self):
-		return self.skill
+		return self.skill.name
+
+
+
+# Skill train timer
+class SkillTrainingTimer(models.Model):
+	"""
+	Character Training timer,  keep track fo what skill is in training, and when it is done
+	"""
+	
+	character = models.ForeignKey(Character, unique=True)
+	skill = models.ForeignKey(Skill, blank=True)
+	trainingground = models.ForeignKey(TrainingGround, verbose_name='Training ground')
+	timer = models.DateTimeField()
+	
+	
+	def time_remaining(self):
+		timer = self.timer
+		now = datetime.datetime.utcnow().replace(tzinfo=utc)
+		
+		if timer < now:
+			return "Now"
+		else:
+			return game_logic.timedelta_format(timer - now)
+			
+	time_remaining.admin_order_field = "skill"
+	time_remaining.short_description = "Time Remaining"
+		
+		
+	def __unicode__(self):
+		return "%s, %s Finnished: %s" % (self.character, self.skill, self.timer)
+	
 	

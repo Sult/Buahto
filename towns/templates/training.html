@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block mainframe %}
+<br>
+<br>
+<br>
+<br>
+
+All Available skills
+TODO: Javascript swap between all avilable and possible to train on character
+TODO: collapse/extend categories and show trianingtime per skill?
+
+<form action="{% url 'training' %}" method='post'>{% csrf_token %}
+<table>
+	{% for category, skills in char_skills_available %}
+		<tr>
+			<th>{{ category }}</th>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+
+		{% for skill in skills %}
+		<tr>
+			<td>
+				<input type="radio" name="skill" value="{{ skill }}" />{{ skill.name }}
+			</td>
+		</tr>
+			{% if forloop.last %}
+			<tr>
+				<td><br></td>
+			</tr>
+			{% endif %}
+		{% endfor %}
+	{% endfor %}
+</table>
+<input type="submit" value="Train">
+</form>
+{% endblock %}

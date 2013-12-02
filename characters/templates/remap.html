@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block mainframe %}
+	
+	
+{% if 'character' in request.session %}
+	<p>Jeej there is some character</p>
+	{{ request.session.character.name }}
+	
+	<form action="{% url 'remap' %}" method="post">{% csrf_token %}
+		<button type="submit" value="strength">+</button>
+	
+	
+	
+	
+	</form>
+	
+	
+{% endif %}
+
+
+
+
+
+
+{% endblock %}

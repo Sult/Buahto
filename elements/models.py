@@ -1,8 +1,9 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from time import time
 import datetime
-
+from django.utils.timezone import utc
 
 
 #### GAME RELATED NUMBERS ####
@@ -24,11 +25,53 @@ class GameRelatedNumbers(models.Model):
 	remap_timer = models.IntegerField()						# Timer on attribute remapping in days
 	remap_bonus = models.IntegerField() 					# bonus remaps before you get a timer
 	
+	#Skills
+	secundary_bonus = models.FloatField()					# multiplier  of secundary attribute that helps shorten training time
+	base_skill_points = models.IntegerField()				# amount of basic points needed for math
+	base_power_of = models.FloatField()						# Number to be the power of 
+	power_of_multiplier = models.FloatField()				# power of increasement for higher multiplier skills
+	
 	# Reputations
 	faction_is = models.IntegerField()						# Reputation on character faction on creation
-	faction_likes = models.IntegerField()						# Reputation on friend faction on creation
-	faction_hates = models.IntegerField()						# Reputation on enemy faction on creation
+	faction_likes = models.IntegerField()					# Reputation on friend faction on creation
+	faction_hates = models.IntegerField()					# Reputation on enemy faction on creation
 
+
+
+class TownRelatedNumbers(models.Model):
+	"""
+	Holds the varaibles related to town management
+	"""
+	
+	#overal town related
+	max_char_in_town = models.IntegerField()				# max online people in 1 town
+	max_upgrades = models.IntegerField()					# max "town" upgrades 
+	
+	
+	# Trainingground related
+	max_trainingground_upgrades = models.IntegerField()		# max "trainingground" upgrades
+	max_char_in_training = models.IntegerField()			# max characters in trianing at trainingground
+	
+	
+
+
+class Timer(models.Model):
+	"""
+	Set of timers that cna be used for different activities throughout the game
+	Keep in mind timers can be reduced by skills or other options
+	"""
+	
+	minutes = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(59)])
+	hours = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(23)])
+	days = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(90)])
+	
+	def __unicode__(self):
+		return "Minutes: %s Hours: %s Days: %s" % (self.minutes, self.hours, self.days)
+	
+	
+	
+	
+	
 
 
 #### CHARACTER ELEMENTS ####
@@ -88,7 +131,7 @@ class Skill(models.Model):
 	category = models.ForeignKey(SkillCategory)
 	
 	name = models.CharField(max_length=63)
-	flavor = models.CharField(max_length=255)
+	flavor = models.TextField(max_length=255)
 	multiplier = models.IntegerField()
 	
 	def __unicode__(self):
@@ -129,3 +172,7 @@ class FactionLike(models.Model):
 	def __unicode__(self):
 		return "%s likes: %s, hates: %s" % (self.faction, 
 									self.likes_faction, self.hates_faction)
+
+
+
+	

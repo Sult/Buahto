@@ -10,7 +10,7 @@ TODO: Show only origins after Faction, and only those that are related to the fa
 
 	<div>
 		<h2>Create new character</h2>
-		<form action="{% url 'create_character' %}" method="post">{% csrf_token%}
+		<form action="{% url 'create_character' %}" method="post">{% csrf_token %}
 			{{ create_char.as_p }}
 	
 			<input type="submit" value="Create" />

@@ -22,8 +22,13 @@
 			LINKS HIER
 			<br><br>
 			-<a href="/users/login/">Login</a><br>
+			-<a href="{% url 'characters' %}">Char Overview</a><br>
+			-<a href="{% url 'remap' %}">Remap Attributes</a><br>
 			<br>
-			-<a href="{% url 'characters' %}">Characters(WN!)</a><br><br>
+			<br>
+			TOWNS<br>
+			- <a href="{% url 'trainingground' %}">Training Grounds</a><br>
+			- <a href="{% url 'training' %}">Training</a><br>
 		{% endblock %}
 	</div>
 	<div>

@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 {% block mainframe %}
 
-
-{% if characters|length < 4 %}
-	{% for character in characters %}
-		<div class="characters">
+{% if user.is_authenticated %}
+	{% if characters|length < 4 %}
+		{% for character in characters %}
+		<center>
+			<div class="characters">
 				<div>
-					<a href="{% url 'character_profile' character.name %}">
+					<a href="{% url 'profile' character.name %}">
 						<img src="{{ character.portrait.portrait }}" alt="{{ character.portrait.name }}"/>
 					</a>
 				</div>
 				<div style="height: 30px">
-					<a href="{% url 'character_profile' character.name %}">
+					<a href="{% url 'profile' character.name %}">
 						{{character.name}}
 					</a>
 				</div>
@@ -30,16 +31,16 @@
 						Log in(WN)
 					</a>
 				</div>
-			</a>
+			</div>
+		</center>
+		{% endfor %}
+	{% endif %}	
+	{% if characters|length < 3 %}
+		<div>
+			<p><a href="{% url 'create_character' %}">New Character</a></p>
 		</div>
-	{% endfor %}
-{% endif %}	
-
-
-{% if characters|length < 3 %}
-	<div>
-		<p><a href="{% url 'create_character' %}">New Character</a></p>
-	</div>
+	{% endif %}
+{% else %}
+Please <a href="{% url 'index' %}">login</a> or <a href="{% url 'register_user' %}">register</a> to create a character
 {% endif %}
-
 {% endblock %}

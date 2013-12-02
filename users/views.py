@@ -19,7 +19,7 @@ def index(request):
     # The form itself handles authentication and checking to make sure passowrd and such are supplied.
     if auth_form.is_valid():
         login(request, auth_form.get_user())
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('characters'))
  
     return render(request, 'index.html', {'auth_form': auth_form})
 

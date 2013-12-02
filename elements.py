@@ -4,7 +4,7 @@ from elements.models import GameRelatedNumbers
 from elements.models import Portrait, Attribute, Faction, FactionLike
 from elements.models import SkillCategory, Skill
 
-
+from towns.models import Town
 
 # Add general game stats
 def add_gamerelatednumbers():
@@ -22,10 +22,10 @@ def add_gamerelatednumbers():
 		remap_bonus = 1,
 		
 		# skills
-		#basic_skill_points = 150,
-		#default_multiplier = 2.3,
-		#primary_multiplier = 1.2,
-		#secundary_multiplier = 0.6,
+		secundary_bonus = 0.4,
+		base_skill_points = 200,			#was 150
+		base_power_of = 1.7,					#was 1.65
+		power_of_multiplier = 1.35,
 		
 		#Reputation statistics
 		faction_is = 1000,
@@ -141,7 +141,7 @@ def add_skillcategories():
 		('Town management', 'flavor text'),
 		('Trade', 'flavor text'),
 		('Travel', 'flavor text'),
-		('Weapons', 'flavor text'),
+		('Skirmish', 'flavor text'),
 	)
 	
 	for category in all_categories:
@@ -153,29 +153,10 @@ def add_skillcategories():
 		
 
 
-def add_some_skills():
-	some_skills = (
-		('Archery', 'Small Ranged Weapons', 'Dexterity', 'Strength', 'Flavor', 1),
-		('Archery', 'Power Shot', 'Dexterity', 'Strength', 'Flavor', 1),
-		('Archery', 'Fast Reload', 'Dexterity', 'Strength', 'Flavor', 1),
-		('Archery', 'Precise Shot', 'Dexterity', 'Strength', 'Flavor', 1),
-		('Archery', 'Medium Ranged Weapons', 'Dexterity', 'Strength', 'Flavor', 2),
-		('Archery', 'Ambush', 'Dexterity', 'Strength', 'Flavor', 2),
-		('Archery', 'Quick Draw', 'Dexterity', 'Strength', 'Flavor', 2),
-	)
+
+
+
 	
-	for a_skill in some_skills:
-		the_skill = Skill(
-			name = a_skill[1],
-			category = SkillCategory.objects.get(name=a_skill[0]),
-			primary = Attribute.objects.get(name=a_skill[2]),
-			secundary = Attribute.objects.get(name=a_skill[3]),
-			flavor = a_skill[4],
-			multiplier = a_skill[5],
-		)
-		the_skill.save()
-		
-		
 
 add_gamerelatednumbers()
 add_attributes()
@@ -183,4 +164,5 @@ add_portraits()
 add_factions()
 add_faction_likes()
 add_skillcategories()
-add_some_skills()
+
+
